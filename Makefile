@@ -6,7 +6,7 @@
 #    By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/05 17:09:56 by rgramati          #+#    #+#              #
-#    Updated: 2024/10/06 01:54:19 by rgramati         ###   ########.fr        #
+#    Updated: 2024/10/07 00:50:41 by rgramati         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,18 +23,29 @@ OBJS_DIR	:=	build
 
 SRCS		:=	cm_chunk/cm_chunk.c		\
 				cm_chunk/cm_access.c	\
+				cm_htable/cm_htable.c	\
 				utils.c
 				# cm_arena/cm_arena.c		\
-				# cm_htable/cm_htable.c	\
 
 SRCS		:=	$(addprefix $(SRC_DIR)/, $(SRCS))
 
 OBJS 		:=	$(addprefix $(OBJS_DIR)/, $(SRCS:%.c=%.o))
 SOBJS 		:=	$(addprefix $(OBJS_DIR)/PIC/, $(SRCS:%.c=%.o))
 
+TEST_DIR	:=	tests
+
+TEST_SRCS	:=	$(LIBNAME)_test.c		\
+				cm_test_chunk.c	\
+				cm_test_arena.c	\
+				cm_test_htable.c	\
+
+TEST_SRCS	:=	$(addprefix $(TEST_DIR)/, $(TEST_SRCS))
+
+TOBJS		:=	$(addprefix $(OBJS_DIR)/, $(TEST_SRCS:%.c=%.o))
+
 INCLUDES	:=	include
 
-CC			:=	gcc
+CC			:=	clang
 
 CFLAGS		:=	-Wall -Wextra -Werror -g3
 
@@ -46,22 +57,22 @@ RM			:=	rm -rf
 # Rules
 #
 
-all:		$(LIBNAME)
+all:					$(LIBNAME)
 
-$(LIBNAME): $(OBJS)
+$(LIBNAME): 			$(OBJS)
 	@ar rc $@.a $^
 	@echo " $(GREEN)$(BOLD)$(ITALIC)■$(RESET)  linking	$(GRAY)$(BOLD)$(ITALIC)$(LIBNAME).a$(RESET)"
 
-so:			$(SOBJS)
+so:						$(SOBJS)
 	@$(CC) -shared -o $(LIBNAME).so $^
 	@echo " $(GREEN)$(BOLD)$(ITALIC)■$(RESET)  linking	$(GRAY)$(BOLD)$(ITALIC)$(LIBNAME).so$(RESET)"
 
-$(OBJS_DIR)/PIC/%.o: %.c
+$(OBJS_DIR)/PIC/%.o:	%.c
 	@mkdir -p $(@D)
 	@echo " $(CYAN)$(BOLD)$(ITALIC)■$(RESET)  compiling	$(GRAY)$(BOLD)$(ITALIC)(PIC)$(notdir $@) from $(GRAY)$(BOLD)$(ITALIC)$(notdir $^)$(RESET)"
 	@$(CC) $(CFLAGS) -fPIC $(COPTS) -o $@ -c $^
 
-$(OBJS_DIR)/%.o: %.c
+$(OBJS_DIR)/%.o:		%.c
 	@mkdir -p $(@D)
 	@echo " $(CYAN)$(BOLD)$(ITALIC)■$(RESET)  compiling	$(GRAY)$(BOLD)$(ITALIC)$(notdir $@) from $(GRAY)$(BOLD)$(ITALIC)$(notdir $^)$(RESET)"
 	@$(CC) $(CFLAGS) $(COPTS) -o $@ -c $^
@@ -72,7 +83,7 @@ clean:
 		$(RM) $(OBJS_DIR); \
 	fi
 
-fclean:		clean
+fclean:					clean
 	@if [ -f "$(LIBNAME).a" ]; then \
 		echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  deleted	$(GRAY)$(BOLD)$(ITALIC)$(LIBNAME).a$(RESET)"; \
 		$(RM) $(LIBNAME).a; \
@@ -82,13 +93,13 @@ fclean:		clean
 		$(RM) $(LIBNAME).so; \
 	fi;
 
-test:		all
-	@$(CC) -o $(LIBNAME)_test $(LIBNAME)_test.c $(LIBNAME).a $(COPTS) $(CFLAGS)
+test:					all $(TOBJS)
+	@$(CC) -o $(LIBNAME)_test $(TOBJS) $(LIBNAME).a $(COPTS) $(CFLAGS)
 	@./$(LIBNAME)_test
 
 re:			fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean test re
 
 #
 # COLORS

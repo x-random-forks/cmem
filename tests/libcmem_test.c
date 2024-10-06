@@ -6,26 +6,50 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 01:49:32 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/06 01:52:11 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/07 00:53:38 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
+#include <stdint.h>
 #include <stdio.h>
+
+#include <cmemtest.h>
+
 #define CM_INCLUDE_ALL
 #include <cmem.h>
 
-int	main(void)
+void	cm_unit_test_chunk(void);
+void	cm_unit_test_arena(void);
+void	cm_unit_test_htable(void);
+
+int32_t	cm_strcmp(const char *s1, const char *s2);
+
+void	cm_launch_tester(char **argv)
 {
-	t_cm_chunk	*test;
+	UNUSED(argv);
+	PRINTF(
+		CM_ANSI_CLEAR CM_ANSI_BOLD CM_LINE CM_COLOR_SUBTI
+		" - LibCMem - testing suite\n"
+		CM_ANSI_RESET CM_ANSI_BOLD CM_LINE CM_ANSI_RESET
+	);
+	// TODO: NON canonical mode application
+	cm_unit_test_chunk();
+	cm_unit_test_htable();
+}
 
-	test = cm_chunk_init("hello", 6);
-
-	void	*tmp;
-	for (int i = 0; i < 13; i++)
-		tmp = cm_chunk_alloc(test);
-
-	uint32_t	ind = cm_chunk_index(test, tmp);
-	printf("index is %d\n", ind);
-
+int	main(int argc, char **argv)
+{
+	if (argc != 1)
+	{
+		PRINTF(
+			CM_ANSI_BOLD CM_LINE CM_COLOR_WRONG
+			"[cmem test]"
+			CM_ANSI_RESET CM_ANSI_BOLD
+			": Usage: ./libcmem_test\n"
+			CM_LINE CM_ANSI_RESET
+		);
+		return (1);
+	}
+	cm_launch_tester(argv);
 	return (0);
 }

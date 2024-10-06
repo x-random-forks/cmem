@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:36:49 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/06 03:09:46 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/07 01:05:28 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -15,9 +15,9 @@
 
 # include <stdint.h>
 
-/* ************************************************************************** */
-
 # define CM_CHUNK_DATA_CAP	4032
+
+/* ************************************************************************** */
 
 /**
  * @struct	s_cm_iter		Describes a memroy chunk iterator
@@ -55,23 +55,6 @@ struct s_cm_chunk
 	uint8_t				data[CM_CHUNK_DATA_CAP];
 };
 
-/**
- * @enum	e_chunk_flags
- *
- * 	CM_CHUNK_ZERO : clear chunk data space.
- *	CM_CHUNK_NULL : reset chunk settings.
- *	CM_CHUNK_FREE : frees the chunk.
- *					is also CM_CHUNK_ZERO | CM_CHUNK_NULL
- *	CM_CHUNK_WIPE : erase values from the chunk.
- *					can be ORed with a number of values to
- *					erase multiple values.
- */
-enum	e_chunk_flags
-{
-	CM_CHUNK_ZERO = 1 << 8,
-	CM_CHUNK_NULL = 1 << 9,
-	CM_CHUNK_WIPE = 1 << 10,
-	CM_CHUNK_FREE = CM_CHUNK_ZERO | CM_CHUNK_NULL | 1 << 11
-};
+/* ************************************************************************** */
 
 #endif

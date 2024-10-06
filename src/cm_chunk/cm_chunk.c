@@ -10,23 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdint.h>
 #include <stdlib.h>
 
-#ifndef CM_CHUNKK_IMPLEMENTATION
-# define CM_CHUNKK_IMPLEMENTATION
+#ifndef CM_CHUNK_IMPLEMENTATION
+# define CM_CHUNK_IMPLEMENTATION
 #endif
 #include <cmem.h>
 
+#include <stdio.h>
 t_cm_chunk	*cm_chunk_init(const char *name, uint32_t elem_size)
 {
 	struct s_cm_chunk	*chunk;
 	uint32_t			offset;
 
-	chunk = malloc(sizeof(t_cm_chunk));
+	chunk = malloc(sizeof(struct s_cm_chunk));
 	if (chunk && name)
 	{
-		cm_memset(chunk, 0, sizeof(t_cm_chunk));
+		cm_memset(chunk, 0, sizeof(struct s_cm_chunk));
 		offset = cm_twos_power_raise(elem_size);
 		chunk->capacity = CM_CHUNK_DATA_CAP / offset;
 		chunk->alignment = offset;
@@ -54,15 +54,15 @@ void	cm_chunk_clear(t_cm_chunk *chunk_ptr, uint32_t flags)
 	flags &= ~(0xFF);
 	if (!chunk)
 		return ;
-	if (flags & CM_CHUNK_WIPE)
+	if (flags & CM_CLEAR_WIPE)
 	{
 		chunk->size -= param;
 		ptr = cm_chunk_at(chunk, chunk->size - 1);
 		cm_memset(ptr, 0, param * chunk->alignment);
 	}
-	if (flags & CM_CHUNK_NULL)
+	if (flags & CM_CLEAR_NULL)
 		cm_memset(chunk, 0, 32);
-	if (flags & CM_CHUNK_FREE)
+	if ((flags & CM_CLEAR_FREE) == CM_CLEAR_FREE)
 		free(chunk);
 }
 

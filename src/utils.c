@@ -42,6 +42,16 @@ uint32_t	cm_strlen(const char *str)
 	return (tmp - str);
 }
 
+int32_t	cm_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 == *s2 && *s1)
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
+}
+
 void	cm_memset(void *ptr, unsigned char c, uint32_t n)
 {
 	while (n && (uintptr_t)ptr & (sizeof(uint64_t) - 1))
