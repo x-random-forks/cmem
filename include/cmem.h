@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:35:57 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/07 00:49:21 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/13 03:29:34 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -14,6 +14,8 @@
 # define CMEM_H
 
 # include <stdint.h>
+
+#define CM_INCLUDE_ALL
 
 # ifdef CM_INCLUDE_ALL
 #  ifndef CM_CHUNK_IMPLEMENTATION
@@ -24,6 +26,9 @@
 #  endif
 #  ifndef CM_HTABLE_IMPLEMENTATION
 #   define CM_HTABLE_IMPLEMENTATION
+#  endif
+#  ifndef CM_LIMG_IMPLEMENTATION
+#   define CM_LIMG_IMPLEMENTATION
 #  endif
 # endif
 
@@ -149,7 +154,7 @@ cm_chunk_index(t_cm_chunk *chunk_ptr, void *elem);
 /**
  * @brief	Get the next element from iteration.
  *
- * @param		(chun)		Chunk pointer.
+ * @param		(chunk)		Chunk pointer.
  *
  * @returns	An opaque pointer to the element.
  * @note	This used with a NULL current iterator set it to start iterator.
@@ -160,7 +165,7 @@ void
 /**
  * @brief	Get the start iterator from a chunk.
  *
- * @param		(chun)		Chunk pointer.
+ * @param		(chunk)		Chunk pointer.
  *
  * @returns	An opaque pointer to the start iterator.
  */
@@ -170,12 +175,19 @@ void
 /**
  * @brief	Get the end iterator from a chunk.
  *
- * @param		(chun)		Chunk pointer.
+ * @param		(chunk)		Chunk pointer.
  *
  * @returns	An opaque pointer to the end iterator.
  */
 void
 *cm_chunk_it_end(t_cm_chunk *chunk_ptr);
+
+/**
+ * @brief	Allocates new linked chunk for additional space.
+ *
+ * @param		(chunk)		Chunk pointer.
+ */
+void	cm_chunk_link(t_cm_chunk *chunk_ptr);
 
 # endif	//	CM_CHUNK_IMPLEMENTATION
 
@@ -209,6 +221,17 @@ void
 
 void
 *cm_htable_remove(t_cm_htable *htable_ptr, const char *key);
+
+#endif
+
+// ************************************************************************** //
+
+#ifdef CM_LIMG_IMPLEMENTATION
+
+uint32_t
+cm_bmp(const char *filename, uint32_t **data_ptr);
+
+// TODO : #include <zlib.h> and png parsing :)
 
 #endif
 

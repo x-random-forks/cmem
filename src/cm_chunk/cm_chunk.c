@@ -17,7 +17,6 @@
 #endif
 #include <cmem.h>
 
-#include <stdio.h>
 t_cm_chunk	*cm_chunk_init(const char *name, uint32_t elem_size)
 {
 	struct s_cm_chunk	*chunk;
@@ -50,6 +49,8 @@ void	cm_chunk_clear(t_cm_chunk *chunk_ptr, uint32_t flags)
 	void				*ptr;
 
 	chunk = (struct s_cm_chunk *)chunk_ptr;
+	if (chunk->next)
+		cm_chunk_clear(chunk->next, flags);
 	param = flags & 0xFF;
 	flags &= ~(0xFF);
 	if (!chunk)
