@@ -6,7 +6,7 @@
 #    By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/05 17:09:56 by rgramati          #+#    #+#              #
-#    Updated: 2024/10/07 00:50:41 by rgramati         ###   ########.fr        #
+#    Updated: 2024/10/13 03:35:12 by rgramati         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ OBJS_DIR	:=	build
 SRCS		:=	cm_chunk/cm_chunk.c		\
 				cm_chunk/cm_access.c	\
 				cm_htable/cm_htable.c	\
+				cm_limg/cm_limg.c		\
 				utils.c
 				# cm_arena/cm_arena.c		\
 
@@ -79,7 +80,7 @@ $(OBJS_DIR)/%.o:		%.c
 
 clean:
 	@if [ -d $(OBJS_DIR) ]; then \
-		echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  deleted	$(GRAY)$(BOLD)$(ITALIC)$(OBJS_DIR)$(RESET)"; \
+		echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  deleted	$(GRAY)$(BOLD)$(ITALIC)$(LIBNAME)/$(OBJS_DIR)$(RESET)"; \
 		$(RM) $(OBJS_DIR); \
 	fi
 

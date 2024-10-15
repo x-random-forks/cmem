@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/13 02:41:27 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/13 02:46:39 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/13 03:36:08 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -43,8 +43,6 @@ typedef struct s_bmp_info
 	uint32_t	colors;
 	uint32_t	important;
 }	t_bmp_info;
-
-uint32_t	cm_bmp_data(const char *filename, uint32_t **data_ptr);
 
 /* ************************************************************************** */
 

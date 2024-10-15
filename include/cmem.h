@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:35:57 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/13 03:29:34 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/13 23:12:55 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -228,8 +228,17 @@ void
 
 #ifdef CM_LIMG_IMPLEMENTATION
 
+# include <../src/cm_limg/cm_limg.h>
+
+typedef enum e_open_types
+{
+	CM_OPEN_LOAD = 1,
+	CM_OPEN_SAVE = 1 << 1,
+	CM_OPEN_ALLOC = 1 << 2
+}	t_open_types;
+
 uint32_t
-cm_bmp(const char *filename, uint32_t **data_ptr);
+cm_bmp(const char *filename, uint32_t **data_ptr, uint64_t flags);
 
 // TODO : #include <zlib.h> and png parsing :)
 
