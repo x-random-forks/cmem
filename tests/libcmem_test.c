@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 01:49:32 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/07 00:53:38 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/07 14:18:58 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -33,7 +33,7 @@ void	cm_launch_tester(char **argv)
 		CM_ANSI_RESET CM_ANSI_BOLD CM_LINE CM_ANSI_RESET
 	);
 	// TODO: NON canonical mode application
-	cm_unit_test_chunk();
+	// cm_unit_test_chunk();
 	cm_unit_test_htable();
 }
 

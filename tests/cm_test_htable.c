@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/07 00:46:52 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/07 01:07:27 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/07 14:19:29 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -32,4 +32,6 @@ void	cm_unit_test_htable(void)
 	cm_htable_set(ptr, "Killian", (void *)&"L'autiste");
 
 	printf("%s\n", (char *)cm_htable_get(ptr, "Mateo"));
+
+	cm_htable_clear(ptr, CM_CLEAR_FREE);
 }
