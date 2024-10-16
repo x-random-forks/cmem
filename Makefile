@@ -6,7 +6,7 @@
 #    By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/05 17:09:56 by rgramati          #+#    #+#              #
-#    Updated: 2024/10/13 03:35:12 by rgramati         ###   ########.fr        #
+#    Updated: 2024/10/17 00:58:04 by rgramati         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,11 +62,11 @@ all:					$(LIBNAME)
 
 $(LIBNAME): 			$(OBJS)
 	@ar rc $@.a $^
-	@echo " $(GREEN)$(BOLD)$(ITALIC)■$(RESET)  linking	$(GRAY)$(BOLD)$(ITALIC)$(LIBNAME).a$(RESET)"
+	@echo " $(GREEN)$(BOLD)$(ITALIC)■$(RESET)  linking	$(GREEN)$(BOLD)$(ITALIC)$(LIBNAME).a$(RESET)"
 
 so:						$(SOBJS)
 	@$(CC) -shared -o $(LIBNAME).so $^
-	@echo " $(GREEN)$(BOLD)$(ITALIC)■$(RESET)  linking	$(GRAY)$(BOLD)$(ITALIC)$(LIBNAME).so$(RESET)"
+	@echo " $(GREEN)$(BOLD)$(ITALIC)■$(RESET)  linking	$(GREEN)$(BOLD)$(ITALIC)$(LIBNAME).so$(RESET)"
 
 $(OBJS_DIR)/PIC/%.o:	%.c
 	@mkdir -p $(@D)
@@ -80,17 +80,17 @@ $(OBJS_DIR)/%.o:		%.c
 
 clean:
 	@if [ -d $(OBJS_DIR) ]; then \
-		echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  deleted	$(GRAY)$(BOLD)$(ITALIC)$(LIBNAME)/$(OBJS_DIR)$(RESET)"; \
+		echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  deleted	$(RED)$(BOLD)$(ITALIC)$(LIBNAME)/$(OBJS_DIR)$(RESET)"; \
 		$(RM) $(OBJS_DIR); \
 	fi
 
 fclean:					clean
 	@if [ -f "$(LIBNAME).a" ]; then \
-		echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  deleted	$(GRAY)$(BOLD)$(ITALIC)$(LIBNAME).a$(RESET)"; \
+		echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  deleted	$(RED)$(BOLD)$(ITALIC)$(LIBNAME).a$(RESET)"; \
 		$(RM) $(LIBNAME).a; \
 	fi;
 	@if [ -f "$(LIBNAME).so" ]; then \
-		echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  deleted	$(GRAY)$(BOLD)$(ITALIC)$(LIBNAME).so$(RESET)"; \
+		echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  deleted	$(RED)$(BOLD)$(ITALIC)$(LIBNAME).so$(RESET)"; \
 		$(RM) $(LIBNAME).so; \
 	fi;
 
