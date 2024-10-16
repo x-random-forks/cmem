@@ -18,14 +18,14 @@ $ make so
 $ clang -o [your_project] [your_project.c] -lcmem -L cmem
 ```
 
-You just have to include `cmem.h`. Since i'm a 42 student, the whole project is in accordance with The Norm. 
-This said, i tried to approach an STB-style (header-only) library except for the header-only part.
-You'll have to `#define`: 
-`CM_CHUNK_IMPLEMENTATION`, 
-`CM_ARENA_IMPLEMENTATION`, 
-`CM_HTABLE_IMPLEMENTATION`, 
-`CM_LIMG_IMPLEMENTATION`, 
-to respectively use any of the features. 
+You just have to include `cmem.h`. Since i'm a 42 student, the whole project is in accordance with The Norm.    
+This said, i tried to approach an STB-style (header-only) library except for the header-only part.    
+You'll have to `#define`:    
+`CM_CHUNK_IMPLEMENTATION`,    
+`CM_ARENA_IMPLEMENTATION`,    
+`CM_HTABLE_IMPLEMENTATION`,    
+`CM_LIMG_IMPLEMENTATION`,    
+to respectively use any of the features.    
 You can also use `#define CM_INCLUDE_ALL` to get the 3 structures implementations at once.
 
 Those are the typedefs available to work with. They are opaque pointers and are not meant to be de-referenced...
