@@ -1,4 +1,4 @@
-# libcmem (v 0.1)
+# libcmem (v 0.11)
 
 C Memory Lib
 
@@ -18,10 +18,14 @@ $ make so
 $ clang -o [your_project] [your_project.c] -lcmem -L cmem
 ```
 
-You just have to include `cmem.h`. Since i'm a 42 student, the whole project is in accordance with The Norm.  
+You just have to include `cmem.h`. Since i'm a 42 student, the whole project is in accordance with The Norm. 
 This said, i tried to approach an STB-style (header-only) library except for the header-only part.
-You'll have to `#define` `CM_CHUNK_IMPLEMENTATION`, `CM_ARENA_IMPLEMENTATION` and/or `CM_HTABLE_IMPLEMENTATION`
-to respectively use chunks, arenas and/or hash tables.  
+You'll have to `#define`: 
+`CM_CHUNK_IMPLEMENTATION`, 
+`CM_ARENA_IMPLEMENTATION`, 
+`CM_HTABLE_IMPLEMENTATION`, 
+`CM_LIMG_IMPLEMENTATION`, 
+to respectively use any of the features. 
 You can also use `#define CM_INCLUDE_ALL` to get the 3 structures implementations at once.
 
 Those are the typedefs available to work with. They are opaque pointers and are not meant to be de-referenced...
@@ -136,5 +140,35 @@ int	main(void)
 
     // Destroy the hash table
     cm_htable_clear(books, CM_HTABLE_FREE);
+}
+```
+
+## **(WIP)** Light Images
+- Windows BMP parser. (8 and 24 bpp for now)
+- **(TODO)** PNG Parsing. (zlib or not zlib that's the question...)
+
+```c
+#define CM_LIMG_IMPLEMENTATION
+#include <cmem.h>
+
+int	main(void)
+{
+    // Variable to store pixel info;
+    uint32_t    *img;
+
+    img = NULL;    
+    // Allocate memory for pixels at the adress passed
+    cm_bmp("test_img_load.bmp", &img, CM_OPEN_LOAD);
+
+    free(img);
+
+
+    // Assuming img holds a single-dimension pixel array
+    img = ...
+
+    // Save the pixel array as a new bmp image. (24 bpp save only for now)
+    cm_bmp("test_img_save.bmp", &img, CM_OPEN_SAVE | IMG_WIDTH << 16 | IMG_HEIGHT);
+    //                                               ^                 ^
+    // Please make me change this... (pass a 2 short struct for example)
 }
 ```
