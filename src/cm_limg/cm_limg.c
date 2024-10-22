@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/13 02:46:41 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/13 23:14:19 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/22 22:12:49 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -129,7 +129,6 @@ uint32_t	cm_bmp_fill(int32_t fd, uint32_t **data_ptr, t_bmp_header *h, t_bmp_inf
 		printf("TODO : implement other types of colors");
 		return (1);
 	}
-
 	if (i->bpp == 24)
 		cm_bmp_fill_bpp24(fd, data_ptr, i, bmp_size);
 	else if (i->bpp == 8)
@@ -150,11 +149,11 @@ void	cm_bmp_save(const char *filename, uint32_t *source, uint32_t width, uint32_
 	info.bpp = 24;
 	info.size = 40;
 	info.width = width;
-	info.height = height * 2;
-	uint8_t	*image = malloc(width * height * 2 * 3);
-	for (uint32_t i = 0; i < height * 2; i++)
+	info.height = height;
+	uint8_t	*image = malloc(width * height * 3);
+	for (uint32_t i = 0; i < height; i++)
 	{
-		invheight = (height * 2 - i - 1);
+		invheight = (height - i - 1);
 		for (uint32_t j = 0; j < width; j++)
 		{
 			image[3 * i * width + 3 * j] = source[invheight * width + j] & 0xFF;
@@ -162,13 +161,11 @@ void	cm_bmp_save(const char *filename, uint32_t *source, uint32_t width, uint32_
 			image[3 * i * width + 3 * j + 2] = (source[invheight * width + j] >> 16) & 0xFF;
 		}
 	}
-	header.file_size = header.data_offset + width * height * 2 * 3;
-
+	header.file_size = header.data_offset + width * height * 3;
 	int fd = open(filename, O_WRONLY | O_CREAT, 0644);
 	write(fd, (uint8_t *)&header.signature[1], 14);
 	write(fd, (uint8_t *)&info, 40);
-	write(fd, image, height * 2 * width * 3);
-
+	write(fd, image, height * width * 3);
 	close(fd);
 }
 
@@ -191,12 +188,10 @@ uint32_t	cm_bmp_load(const char *filename, uint32_t **data_ptr)
 		return (1);
 	if (cm_bmp_info(buffer, &info) || info.bpp < 8) // TODO : Handle palette parsing
 		return (1);
-
 	if (info.bpp == 24)
 		*data_ptr = malloc(((header.file_size - header.data_offset) << 2) / 3);
 	else if (info.bpp == 8)
 		*data_ptr = malloc(((header.file_size - header.data_offset) << 2));
-
 	if (!*data_ptr)
 		return (1);
 	if (cm_bmp_fill(fd, data_ptr, &header, &info))

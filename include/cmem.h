@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:35:57 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/13 23:12:55 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/22 22:29:12 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -14,8 +14,6 @@
 # define CMEM_H
 
 # include <stdint.h>
-
-#define CM_INCLUDE_ALL
 
 # ifdef CM_INCLUDE_ALL
 #  ifndef CM_CHUNK_IMPLEMENTATION
@@ -150,6 +148,15 @@ void
  */
 uint32_t
 cm_chunk_index(t_cm_chunk *chunk_ptr, void *elem);
+
+/**
+ * @brief	Get chunk size.
+ *
+ * @param		(chunk)		Chunk pointer.
+ * 
+ * @returns	Chunk actual size.
+ */
+uint32_t	cm_chunk_size(t_cm_chunk *chunk_ptr);
 
 /**
  * @brief	Get the next element from iteration.
