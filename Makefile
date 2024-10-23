@@ -6,7 +6,7 @@
 #    By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/05 17:09:56 by rgramati          #+#    #+#              #
-#    Updated: 2024/10/17 00:58:04 by rgramati         ###   ########.fr        #
+#    Updated: 2024/10/22 22:47:45 by rgramati         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC_DIR		:=	src
 OBJS_DIR	:=	build
 
 SRCS		:=	cm_chunk/cm_chunk.c		\
+				cm_chunk/cm_links.c		\
 				cm_chunk/cm_access.c	\
 				cm_htable/cm_htable.c	\
 				cm_limg/cm_limg.c		\

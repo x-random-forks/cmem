@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/13 02:46:41 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/22 22:12:49 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/22 22:51:06 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -169,7 +169,7 @@ void	cm_bmp_save(const char *filename, uint32_t *source, uint32_t width, uint32_
 	close(fd);
 }
 
-uint32_t	cm_bmp_load(const char *filename, uint32_t **data_ptr)
+uint32_t	cm_bmp_load(const char *filename, uint32_t **data_ptr, uint16_t *w, uint16_t *h)
 {
 	int32_t			fd;
 	char			buffer[64];
@@ -196,6 +196,8 @@ uint32_t	cm_bmp_load(const char *filename, uint32_t **data_ptr)
 		return (1);
 	if (cm_bmp_fill(fd, data_ptr, &header, &info))
 		return (1);
+	*w = info.width;
+	*h = info.height;
 	return (0);
 }
 
@@ -208,7 +210,7 @@ uint32_t	cm_bmp(const char *filename, uint32_t **data_ptr, uint64_t flags)
 	height = (flags & 0xFFFF00000000) >> 32;
 	flags &= 0xFFFF;
 	if (flags & CM_OPEN_LOAD)
-		cm_bmp_load(filename, data_ptr);
+		cm_bmp_load(filename, data_ptr, &width, &height);
 	if (flags & CM_OPEN_SAVE)
 		cm_bmp_save(filename, *data_ptr, width, height);
 	return ((uint32_t)width << 16 | height);

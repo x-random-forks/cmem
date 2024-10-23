@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/09/27 01:42:35 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/22 22:26:31 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/22 23:07:22 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -66,12 +66,13 @@ void	*cm_chunk_it_next(t_cm_chunk *chunk_ptr)
 
 	chunk = (struct s_cm_chunk *)chunk_ptr;
 	if (chunk->iterator.it == NULL)
-		chunk->iterator.it = chunk->iterator.start;
+		chunk->iterator.it = &chunk->data;
 	else
 	{
 		chunk->iterator.it += chunk->alignment;
 		chunk->iterator.index++;
-		if (chunk->iterator.it > chunk->iterator.end)
+		if (chunk->iterator.it > chunk->iterator.end || \
+			chunk->iterator.index >= chunk->size)
 		{
 			chunk->iterator.it = NULL;
 			chunk->iterator.index = 0;

@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 19:23:01 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/07 01:08:07 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/23 02:03:57 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -35,7 +35,6 @@ t_cm_htable	*cm_htable_init(uint32_t capacity)
 
 	if (!capacity)
 		return (NULL);
-	printf("sizeof htable is %zu\n", sizeof(struct s_cm_htable));
 	htable = malloc(sizeof(struct s_cm_htable));
 	if (htable)
 	{
@@ -56,6 +55,7 @@ t_cm_htable	*cm_htable_init(uint32_t capacity)
 void	cm_htable_clear(t_cm_htable *htable_ptr, uint32_t flags)
 {
 	struct s_cm_htable	*htable;
+	uint32_t			i;
 
 	htable = (struct s_cm_htable *)htable_ptr;
 	if (!htable)
@@ -68,6 +68,9 @@ void	cm_htable_clear(t_cm_htable *htable_ptr, uint32_t flags)
 		cm_memset(htable, 0, sizeof(uint32_t));
 	if (flags & CM_CLEAR_FREE)
 	{
+		i = 0;
+		while (i < htable->capacity)
+			free(htable->entries[i].key);
 		free(htable->entries);
 		free(htable);
 	}
@@ -89,7 +92,7 @@ void	cm_htable_set(t_cm_htable *htable_ptr, const char *key, void *data)
 	// {
 		// TODO: Handle collisions
 	// }
-	entry->key = (char *)key;
+	entry->key = cm_strdup(key);
 	if (entry->data)
 		htable->del(entry->data);
 	htable->entries[index].data = data;

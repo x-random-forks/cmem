@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include <cmem.h>
+#include <stdint.h>
+#include <stdlib.h>
 
 uint32_t	cm_min(uint32_t a, uint32_t b)
 {
@@ -50,6 +52,19 @@ int32_t	cm_strcmp(const char *s1, const char *s2)
 		s2++;
 	}
 	return (*s1 - *s2);
+}
+
+char	*cm_strdup(const char *str)
+{
+	char		*cpy;
+	uint32_t	len;
+
+	len = cm_strlen(str);
+	cpy = malloc(len + 1);
+	if (cpy)
+		cm_memcpy(cpy, (void *)str, len);
+	cpy[len] = 0;
+	return (cpy);
 }
 
 void	cm_memset(void *ptr, unsigned char c, uint32_t n)

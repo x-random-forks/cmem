@@ -30,8 +30,6 @@ t_cm_chunk	*cm_chunk_init(const char *name, uint32_t elem_size)
 		chunk->capacity = CM_CHUNK_DATA_CAP / offset;
 		chunk->alignment = offset;
 		chunk->elem_size = elem_size + !elem_size;
-		chunk->iterator.start = (void *)&chunk->data;
-		chunk->iterator.end = cm_chunk_at(chunk, chunk->capacity - 1);
 		cm_memcpy(chunk->name, (void *)name, cm_min(cm_strlen(name), 15));
 		if (!chunk->alignment || !chunk->capacity)
 		{
@@ -79,6 +77,9 @@ void	*cm_chunk_alloc(t_cm_chunk *chunk_ptr)
 		if (chunk->size >= chunk->capacity)
 			return (ptr);
 		ptr = cm_chunk_at(chunk, chunk->size);
+		if (!chunk->size)
+			chunk->iterator.start = ptr;
+		chunk->iterator.end = ptr;
 		chunk->size++;
 	}
 	return (ptr);

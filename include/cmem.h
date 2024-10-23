@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:35:57 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/22 22:29:12 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/23 02:02:47 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -61,6 +61,7 @@ enum	e_clear_flags
 };
 
 // ************************************************************************** //
+#define CM_CHUNK_IMPLEMENTATION
 # ifdef CM_CHUNK_IMPLEMENTATION
 
 # include <../src/cm_chunk/cm_chunk.h>
@@ -156,7 +157,8 @@ cm_chunk_index(t_cm_chunk *chunk_ptr, void *elem);
  * 
  * @returns	Chunk actual size.
  */
-uint32_t	cm_chunk_size(t_cm_chunk *chunk_ptr);
+uint32_t
+cm_chunk_size(t_cm_chunk *chunk_ptr);
 
 /**
  * @brief	Get the next element from iteration.
@@ -264,6 +266,9 @@ cm_strlen(const char *str);
 
 int32_t
 cm_strcmp(const char *s1, const char *s2);
+
+char
+*cm_strdup(const char *str);
 
 void
 cm_memset(void *ptr, unsigned char c, uint32_t n);
