@@ -1,4 +1,4 @@
-# libcmem (v 0.11)
+# libcmem (v 0.12)
 
 C Memory Lib
 
@@ -61,6 +61,7 @@ cm_chunk_destroy(chunk);
 - Simple Constructor and Destructor.
 - Memory-aligned push, pop and alloc.
 - Basic iterators for linear traversing.
+- Linkage of new chunk for more space.
 - **(TODO)** Free list for memory reusage.
 
 ### Example

@@ -74,8 +74,13 @@ void	*cm_chunk_alloc(t_cm_chunk *chunk_ptr)
 	ptr = NULL;
 	if (chunk)
 	{
+		while (chunk->next)
+			chunk = chunk->next;
 		if (chunk->size >= chunk->capacity)
-			return (ptr);
+		{
+			cm_chunk_link(chunk);
+			chunk = chunk->next;
+		}
 		ptr = cm_chunk_at(chunk, chunk->size);
 		if (!chunk->size)
 			chunk->iterator.start = ptr;

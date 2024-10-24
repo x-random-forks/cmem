@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 19:23:01 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/23 02:03:57 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/25 00:15:18 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -64,16 +64,16 @@ void	cm_htable_clear(t_cm_htable *htable_ptr, uint32_t flags)
 	{
 		(void) flags;
 	}
-	if (flags & CM_CLEAR_NULL)
-		cm_memset(htable, 0, sizeof(uint32_t));
 	if (flags & CM_CLEAR_FREE)
 	{
 		i = 0;
 		while (i < htable->capacity)
-			free(htable->entries[i].key);
+			free(htable->entries[i++].key);
 		free(htable->entries);
 		free(htable);
 	}
+	if (flags & CM_CLEAR_NULL)
+		cm_memset(htable, 0, sizeof(uint32_t));
 }
 
 void	cm_htable_set(t_cm_htable *htable_ptr, const char *key, void *data)

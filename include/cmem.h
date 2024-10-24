@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:35:57 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/23 02:02:47 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/25 00:20:50 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -28,6 +28,10 @@
 #  ifndef CM_LIMG_IMPLEMENTATION
 #   define CM_LIMG_IMPLEMENTATION
 #  endif
+# endif
+
+# ifdef CM_CHUNK_IMPLEMENTATION
+#  include <../src/cm_chunk/cm_chunk.h>
 # endif
 
 # define CM_BIT_COUNT	"\
@@ -61,10 +65,8 @@ enum	e_clear_flags
 };
 
 // ************************************************************************** //
-#define CM_CHUNK_IMPLEMENTATION
 # ifdef CM_CHUNK_IMPLEMENTATION
 
-# include <../src/cm_chunk/cm_chunk.h>
 typedef void				t_cm_chunk;
 typedef struct s_cm_iter	t_cm_iterator;
 
