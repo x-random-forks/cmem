@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 19:23:01 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/25 00:15:18 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/26 00:06:13 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -72,7 +72,7 @@ void	cm_htable_clear(t_cm_htable *htable_ptr, uint32_t flags)
 		free(htable->entries);
 		free(htable);
 	}
-	if (flags & CM_CLEAR_NULL)
+	if (flags & CM_CLEAR_NULL && !(flags & CM_CLEAR_FREE))
 		cm_memset(htable, 0, sizeof(uint32_t));
 }
 

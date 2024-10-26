@@ -81,7 +81,7 @@ void	*cm_chunk_alloc(t_cm_chunk *chunk_ptr)
 			cm_chunk_link(chunk);
 			chunk = chunk->next;
 		}
-		ptr = cm_chunk_at(chunk, chunk->size);
+		ptr = &chunk->data[chunk->size * chunk->alignment];
 		if (!chunk->size)
 			chunk->iterator.start = ptr;
 		chunk->iterator.end = ptr;
