@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:35:57 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/25 00:20:50 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/27 22:17:13 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -192,6 +192,15 @@ void
  */
 void
 *cm_chunk_it_end(t_cm_chunk *chunk_ptr);
+
+/**
+ * @brief	Returns the next chunk pointer.
+ *
+ * @param		(chunk)		Chunk pointer.
+ *
+ * @return	Next chunk pointer, NULL if no linking
+ */
+t_cm_chunk	*cm_chunk_next(t_cm_chunk *chunk_ptr);
 
 /**
  * @brief	Allocates new linked chunk for additional space.

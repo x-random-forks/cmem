@@ -6,10 +6,11 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/13 02:46:41 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/22 22:51:06 by rgramati         ###   ########.fr       //
+//   Updated: 2024/10/29 00:01:25 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
+#include "cm_limg.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <stdint.h>
@@ -68,9 +69,11 @@ uint32_t	cm_bmp_fill_bpp24(int32_t fd, uint32_t **data_ptr, t_bmp_info *i, uint3
 	uint32_t	coords[2];
 	uint8_t		pixel[3];
 	uint32_t	bytes;
+	uint32_t	padding;
 
 	cursor = *data_ptr;
 	coords[0] = 0;
+	padding = (i->width * 3) & 3;
 	while (coords[0] < i->height)
 	{
 		coords[1] = 0;
@@ -83,6 +86,7 @@ uint32_t	cm_bmp_fill_bpp24(int32_t fd, uint32_t **data_ptr, t_bmp_info *i, uint3
 			cursor[(i->height - coords[0] - 1) * i->width + coords[1]] = pixel[0] | (pixel[1] << 8) | (pixel[2] << 16);
 			coords[1]++;
 		}
+		read(fd, &pixel, padding);
 		coords[0]++;
 	}
 	return (!!size);
@@ -150,22 +154,30 @@ void	cm_bmp_save(const char *filename, uint32_t *source, uint32_t width, uint32_
 	info.size = 40;
 	info.width = width;
 	info.height = height;
-	uint8_t	*image = malloc(width * height * 3);
+	uint32_t	padding = (width * 3) & 3;
+	info.imgsize = width * height * 3 + height * padding;
+	uint8_t	*image = malloc(info.imgsize);
+	uint32_t	img_index = 0;
+
+
 	for (uint32_t i = 0; i < height; i++)
 	{
 		invheight = (height - i - 1);
-		for (uint32_t j = 0; j < width; j++)
+		uint32_t	j;
+		for (j = 0; j < width; j++)
 		{
-			image[3 * i * width + 3 * j] = source[invheight * width + j] & 0xFF;
-			image[3 * i * width + 3 * j + 1] = (source[invheight * width + j] >> 8) & 0xFF;
-			image[3 * i * width + 3 * j + 2] = (source[invheight * width + j] >> 16) & 0xFF;
+			image[img_index++ + 2] = source[invheight * width + j] & 0xFF;
+			image[img_index++] = (source[invheight * width + j] >> 8) & 0xFF;
+			image[img_index++ - 2] = ((source[invheight * width + j] >> 16) & 0xFF);
 		}
+		for (uint32_t k = 0; k < padding; ++k)
+			image[img_index++] = 0;
 	}
-	header.file_size = header.data_offset + width * height * 3;
+	header.file_size = header.data_offset + info.imgsize;
 	int fd = open(filename, O_WRONLY | O_CREAT, 0644);
 	write(fd, (uint8_t *)&header.signature[1], 14);
 	write(fd, (uint8_t *)&info, 40);
-	write(fd, image, height * width * 3);
+	write(fd, image, info.imgsize);
 	close(fd);
 }
 
