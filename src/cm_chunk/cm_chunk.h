@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:36:49 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/07 01:05:28 by rgramati         ###   ########.fr       //
+//   Updated: 2024/11/05 19:18:26 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -36,6 +36,16 @@ struct s_cm_iter
 };
 
 /**
+ * @struct	s_flist			Free list linked pointer.
+ *
+ * @struct s_flist *	(next)	Next pointer.
+ */
+struct s_flist
+{
+	struct s_flist	*next;
+};
+
+/**
  * @struct	s_chunk			Describes a memory chunk
  *
  * @uint32_t	(capacity)	Maximum capacity of the chunk.
@@ -49,7 +59,7 @@ struct s_cm_chunk
 	uint32_t			size;
 	uint32_t			alignment;
 	uint32_t			elem_size;
-	char				name[8];
+	struct s_flist		*free_list;
 	struct s_cm_iter	iterator;
 	struct s_cm_chunk	*next;
 	uint8_t				data[CM_CHUNK_DATA_CAP];

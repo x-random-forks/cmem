@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:35:57 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/27 22:17:13 by rgramati         ###   ########.fr       //
+//   Updated: 2024/11/05 18:57:25 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -73,13 +73,12 @@ typedef struct s_cm_iter	t_cm_iterator;
 /**
  * @brief	Init a memory chunk.
  *
- * @param		(name)		A name for the memory chunk (15 chars max).
  * @param		(elem_size)	Element size, pass sizeof(elem) to setup correctly.
  *
  * @returns	A pointer to a memory chunk.
  */
 t_cm_chunk
-*cm_chunk_init(const char *name, uint32_t elem_size);
+*cm_chunk_init(uint32_t elem_size);
 
 /**
  * @brief	Perform clear operations on a memory chunk.

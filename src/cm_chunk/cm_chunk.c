@@ -17,21 +17,20 @@
 #endif
 #include <cmem.h>
 
-t_cm_chunk	*cm_chunk_init(const char *name, uint32_t elem_size)
+t_cm_chunk	*cm_chunk_init(uint32_t elem_size)
 {
 	struct s_cm_chunk	*chunk;
 	uint32_t			offset;
 
 	chunk = malloc(sizeof(struct s_cm_chunk));
-	if (chunk && name)
+	if (chunk)
 	{
 		cm_memset(chunk, 0, sizeof(struct s_cm_chunk));
 		offset = cm_twos_power_raise(elem_size);
 		chunk->capacity = CM_CHUNK_DATA_CAP / offset;
 		chunk->alignment = offset;
 		chunk->elem_size = elem_size + !elem_size;
-		cm_memcpy(chunk->name, (void *)name, cm_min(cm_strlen(name), 15));
-		if (!chunk->alignment || !chunk->capacity)
+		if (!chunk->alignment || !chunk->capacity || offset < 8)
 		{
 			free(chunk);
 			chunk = NULL;
@@ -101,7 +100,11 @@ void	*cm_chunk_push(t_cm_chunk *chunk_ptr, void *elem, uint32_t elem_size)
 	{
 		if (elem_size != chunk->elem_size)
 			return (ptr);
-		ptr = cm_chunk_alloc(chunk);
+		ptr = chunk->free_list;
+		if (!ptr)
+			ptr = cm_chunk_alloc(chunk);
+		else
+			chunk->free_list = chunk->free_list->next;
 		if (!ptr)
 			return (ptr);
 		cm_memcpy(ptr, elem, elem_size);
