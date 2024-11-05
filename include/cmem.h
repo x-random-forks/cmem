@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:35:57 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/27 22:17:13 by rgramati         ###   ########.fr       //
+//   Updated: 2024/11/01 15:57:54 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -286,6 +286,9 @@ cm_memset(void *ptr, unsigned char c, uint32_t n);
 
 void
 cm_memcpy(void *dst, void *src, uint32_t n);
+
+void
+cm_memmove(void *dst, void *src, uint32_t n);
 
 /* ************************************************************************** */
 

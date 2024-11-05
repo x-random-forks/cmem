@@ -113,3 +113,27 @@ void	cm_memcpy(void *dst, void *src, uint32_t n)
 		dst++;
 	}
 }
+
+void	cm_memmove(void *dst, void *src, uint32_t n)
+{
+	if ((uintptr_t)dst > (uintptr_t)src)
+	{
+		cm_memcpy(dst, src, n);
+		return ;
+	}
+	while (n && (uintptr_t)(src + n - 1) & (sizeof(uint64_t) - 1))
+	{
+		*(uint8_t *)(dst + n - 1) = *(uint8_t *)(src + n - 1);
+		n--;
+	}
+	while (n >= sizeof(uint64_t))
+	{
+		*(uint64_t *)(dst + n - sizeof(uint64_t)) = *(uint64_t *)(src + n - sizeof(uint64_t));
+		n -= sizeof(uint64_t);
+	}
+	while (n)
+	{
+		*(uint8_t *)(dst + n - 1) = *(uint8_t *)(src + n - 1);
+		n--;
+	}
+}
