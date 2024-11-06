@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:35:57 by rgramati          #+#    #+#             //
-//   Updated: 2024/11/05 19:21:19 by rgramati         ###   ########.fr       //
+//   Updated: 2024/11/05 19:41:23 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -125,7 +125,7 @@ void
  * @returns	Destination pointer, so elem.
  */
 void
-*cm_chunk_pop(t_cm_chunk *chunk_ptr, void *elem);
+cm_chunk_pop(t_cm_chunk *chunk_ptr, void *elem);
 
 /**
  * @brief	Get the element at a certain index on a memory chunk.

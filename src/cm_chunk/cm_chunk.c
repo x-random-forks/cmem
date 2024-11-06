@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "cm_chunk.h"
+#include <stdint.h>
 #include <stdlib.h>
 
 #ifndef CM_CHUNK_IMPLEMENTATION
@@ -101,10 +103,10 @@ void	*cm_chunk_push(t_cm_chunk *chunk_ptr, void *elem, uint32_t elem_size)
 		if (elem_size != chunk->elem_size)
 			return (ptr);
 		ptr = chunk->free_list;
-		if (!ptr)
-			ptr = cm_chunk_alloc(chunk);
-		else
+		if (ptr)
 			chunk->free_list = chunk->free_list->next;
+		else
+			ptr = cm_chunk_alloc(chunk);
 		if (!ptr)
 			return (ptr);
 		cm_memcpy(ptr, elem, elem_size);
@@ -112,20 +114,18 @@ void	*cm_chunk_push(t_cm_chunk *chunk_ptr, void *elem, uint32_t elem_size)
 	return (ptr);
 }
 
-void	*cm_chunk_pop(t_cm_chunk *chunk_ptr, void *elem)
+void	cm_chunk_pop(t_cm_chunk *chunk_ptr, void *elem)
 {
 	struct s_cm_chunk	*chunk;
-	void				*ptr;
+	uint32_t			index;
 
 	chunk = (struct s_cm_chunk *)chunk_ptr;
-	ptr = NULL;
 	if (chunk && elem)
 	{
-		if (chunk->size == 0)
-			return (ptr);
-		chunk->size--;
-		ptr = cm_chunk_at(chunk, chunk->size);
-		cm_memcpy(elem, ptr, chunk->elem_size);
+		index = cm_chunk_index(chunk, elem);
+		if (index == (uint32_t)-1)
+			return ;
+		((struct s_flist *)elem)->next = chunk->free_list;
+		chunk->free_list = elem;
 	}
-	return (elem);
 }

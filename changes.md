@@ -1,5 +1,10 @@
 # libcmem changelog
 
+***v 0.13***: 
+    - Free list implementation. BROKE ITERATORS MADGE
+    - Fixed line padding detection in 24bpp bitmap parsing
+    - Chunk linkage is now effective in accessors/utils
+
 ***v 0.12***: 
     - Added linking of chunks, maybe not perfect but fixes coming if any
 

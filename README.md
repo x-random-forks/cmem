@@ -1,4 +1,4 @@
-# libcmem (v 0.12)
+# libcmem (v 0.13)
 
 C Memory Lib
 
@@ -46,7 +46,7 @@ struct s_cm_htable
 // Example of struct cast
 t_cm_chunk  *chunk;
 
-chunk = cm_chunk_init("dummy", 16);
+chunk = cm_chunk_init(16);
 
 struct s_cm_chunk   *object;
 object = (struct s_cm_chunk *)chunk;
@@ -80,7 +80,7 @@ int	main(void)
     size_t      i;
 
     // Init the chunk
-    floats = cm_chunk_init("floats", sizeof(float));
+    floats = cm_chunk_init(sizeof(float));
 
     i = 0;
 
@@ -104,7 +104,8 @@ int	main(void)
 ## **(WIP)** Arenas
 - Simple Constructor and Destructor.
 - Memory-Aligned push, pop and alloc.
-- **(TODO)** Free list for memory reusage.
+- Free list for memory reusage.
+- ***(TODO)*** Repair iterators.
 
 ```c
 #define CM_ARENA_IMPLEMENTATION

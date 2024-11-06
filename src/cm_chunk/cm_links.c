@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/08 18:03:50 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/27 22:15:52 by rgramati         ###   ########.fr       //
+//   Updated: 2024/11/05 20:27:11 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -31,7 +31,7 @@ void	cm_chunk_link(t_cm_chunk *chunk_ptr)
 	struct s_cm_chunk	*chunk;
 
 	chunk = (struct s_cm_chunk *)chunk_ptr;
-	chunk->next = cm_chunk_init(chunk->name, chunk->alignment);
+	chunk->next = cm_chunk_init(chunk->alignment);
 }
 
 uint32_t	cm_chunk_size(t_cm_chunk *chunk_ptr)
