@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:36:49 by rgramati          #+#    #+#             //
-//   Updated: 2024/11/05 19:20:55 by rgramati         ###   ########.fr       //
+//   Updated: 2024/11/07 20:55:28 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -33,16 +33,6 @@ struct s_cm_iter
 	void		*start;
 	void		*end;
 	uint32_t	index;
-};
-
-/**
- * @struct	s_flist			Free list linked pointer.
- *
- * @struct s_flist *	(next)	Next pointer.
- */
-struct s_flist
-{
-	struct s_flist	*next;
 };
 
 /**

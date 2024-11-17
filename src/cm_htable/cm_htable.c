@@ -6,11 +6,10 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 19:23:01 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/26 00:06:13 by rgramati         ###   ########.fr       //
+//   Updated: 2024/11/07 20:00:51 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
-#include <stdint.h>
 #include <stdlib.h>
 
 #ifndef CM_HTABLE_IMPLEMENTATION
@@ -28,7 +27,6 @@ uint32_t	cm_djb2(const char *key)
 	return (hash);
 }
 
-#include <stdio.h>
 t_cm_htable	*cm_htable_init(uint32_t capacity)
 {
 	struct s_cm_htable	*htable;
@@ -60,10 +58,6 @@ void	cm_htable_clear(t_cm_htable *htable_ptr, uint32_t flags)
 	htable = (struct s_cm_htable *)htable_ptr;
 	if (!htable)
 		return ;
-	if (flags & CM_CLEAR_WIPE)
-	{
-		(void) flags;
-	}
 	if (flags & CM_CLEAR_FREE)
 	{
 		i = 0;

@@ -6,12 +6,9 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/08 18:03:50 by rgramati          #+#    #+#             //
-//   Updated: 2024/11/05 20:27:11 by rgramati         ###   ########.fr       //
+//   Updated: 2024/11/07 18:38:37 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
-
-#include <stdint.h>
-#include <unistd.h>
 
 #ifndef CM_CHUNK_IMPLEMENTATION
 # define CM_CHUNK_IMPLEMENTATION

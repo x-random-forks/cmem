@@ -10,10 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cm_chunk.h"
-#include <stdint.h>
-#include <stdlib.h>
-
 #ifndef CM_CHUNK_IMPLEMENTATION
 # define CM_CHUNK_IMPLEMENTATION
 #endif
@@ -31,7 +27,7 @@ t_cm_chunk	*cm_chunk_init(uint32_t elem_size)
 		offset = cm_twos_power_raise(elem_size);
 		chunk->capacity = CM_CHUNK_DATA_CAP / offset;
 		chunk->alignment = offset;
-		chunk->elem_size = elem_size + !elem_size;
+		chunk->elem_size = elem_size;
 		if (!chunk->alignment || !chunk->capacity || offset < 8)
 		{
 			free(chunk);
@@ -44,22 +40,12 @@ t_cm_chunk	*cm_chunk_init(uint32_t elem_size)
 void	cm_chunk_clear(t_cm_chunk *chunk_ptr, uint32_t flags)
 {
 	struct s_cm_chunk	*chunk;
-	uint32_t			param;
-	void				*ptr;
 
 	chunk = (struct s_cm_chunk *)chunk_ptr;
 	if (chunk->next)
 		cm_chunk_clear(chunk->next, flags);
-	param = flags & 0xFF;
-	flags &= ~(0xFF);
 	if (!chunk)
 		return ;
-	if (flags & CM_CLEAR_WIPE)
-	{
-		chunk->size -= param;
-		ptr = cm_chunk_at(chunk, chunk->size - 1);
-		cm_memset(ptr, 0, param * chunk->alignment);
-	}
 	if (flags & CM_CLEAR_NULL)
 		cm_memset(chunk, 0, 32);
 	if ((flags & CM_CLEAR_FREE) == CM_CLEAR_FREE)
@@ -82,10 +68,11 @@ void	*cm_chunk_alloc(t_cm_chunk *chunk_ptr)
 			cm_chunk_link(chunk);
 			chunk = chunk->next;
 		}
-		ptr = &chunk->data[chunk->size * chunk->alignment];
-		if (!chunk->size)
-			chunk->iterator.start = ptr;
-		chunk->iterator.end = ptr;
+		ptr = chunk->free_list;
+		if (ptr)
+			chunk->free_list = chunk->free_list->next;
+		else
+			ptr = &chunk->data[chunk->size * chunk->alignment];
 		chunk->size++;
 	}
 	return (ptr);
@@ -102,14 +89,9 @@ void	*cm_chunk_push(t_cm_chunk *chunk_ptr, void *elem, uint32_t elem_size)
 	{
 		if (elem_size != chunk->elem_size)
 			return (ptr);
-		ptr = chunk->free_list;
+		ptr = cm_chunk_alloc(chunk);
 		if (ptr)
-			chunk->free_list = chunk->free_list->next;
-		else
-			ptr = cm_chunk_alloc(chunk);
-		if (!ptr)
-			return (ptr);
-		cm_memcpy(ptr, elem, elem_size);
+			cm_memcpy(ptr, elem, elem_size);
 	}
 	return (ptr);
 }
@@ -127,5 +109,6 @@ void	cm_chunk_pop(t_cm_chunk *chunk_ptr, void *elem)
 			return ;
 		((struct s_flist *)elem)->next = chunk->free_list;
 		chunk->free_list = elem;
+		chunk->size--;
 	}
 }

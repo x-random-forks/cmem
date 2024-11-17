@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <cmem.h>
-#include <stdint.h>
 #include <stdlib.h>
 
 uint32_t	cm_min(uint32_t a, uint32_t b)
@@ -62,8 +61,10 @@ char	*cm_strdup(const char *str)
 	len = cm_strlen(str);
 	cpy = malloc(len + 1);
 	if (cpy)
+	{
 		cm_memcpy(cpy, (void *)str, len);
-	cpy[len] = 0;
+		cpy[len] = 0;
+	}
 	return (cpy);
 }
 

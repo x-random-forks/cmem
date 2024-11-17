@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 01:49:32 by rgramati          #+#    #+#             //
-//   Updated: 2024/11/05 20:26:33 by rgramati         ###   ########.fr       //
+//   Updated: 2024/11/08 16:56:04 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -27,11 +27,11 @@ int32_t	cm_strcmp(const char *s1, const char *s2);
 void	cm_launch_tester(char **argv)
 {
 	UNUSED(argv);
-	PRINTF(
-		CM_ANSI_CLEAR CM_ANSI_BOLD CM_LINE CM_COLOR_SUBTI
-		" - LibCMem - testing suite\n"
-		CM_ANSI_RESET CM_ANSI_BOLD CM_LINE CM_ANSI_RESET
-	);
+	// PRINTF(
+	// 	CM_ANSI_CLEAR CM_ANSI_BOLD CM_LINE CM_COLOR_SUBTI
+	// 	" - LibCMem - testing suite\n"
+	// 	CM_ANSI_RESET CM_ANSI_BOLD CM_LINE CM_ANSI_RESET
+	// );
 	// TODO: NON canonical mode application
 	cm_unit_test_chunk();
 	// cm_unit_test_htable();

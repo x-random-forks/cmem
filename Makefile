@@ -6,7 +6,7 @@
 #    By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/05 17:09:56 by rgramati          #+#    #+#              #
-#    Updated: 2024/10/25 00:11:49 by rgramati         ###   ########.fr        #
+#    Updated: 2024/11/07 20:22:50 by rgramati         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ OBJS_DIR	:=	build
 SRCS		:=	cm_chunk/cm_chunk.c		\
 				cm_chunk/cm_links.c		\
 				cm_chunk/cm_access.c	\
+				cm_arena/cm_arena.c		\
 				cm_htable/cm_htable.c	\
 				cm_limg/cm_limg.c		\
 				utils.c
@@ -37,9 +38,9 @@ SOBJS 		:=	$(addprefix $(OBJS_DIR)/PIC/, $(SRCS:%.c=%.o))
 TEST_DIR	:=	tests
 
 TEST_SRCS	:=	$(LIBNAME)_test.c		\
-				cm_test_chunk.c	\
-				cm_test_arena.c	\
-				cm_test_htable.c	\
+				cm_test_chunk.c			\
+				cm_test_arena.c			\
+				cm_test_htable.c		\
 
 TEST_SRCS	:=	$(addprefix $(TEST_DIR)/, $(TEST_SRCS))
 

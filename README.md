@@ -1,4 +1,4 @@
-# libcmem (v 0.13)
+# libcmem (v 0.20)
 
 C Memory Lib
 
@@ -60,9 +60,8 @@ cm_chunk_destroy(chunk);
 ## Data chunks
 - Simple Constructor and Destructor.
 - Memory-aligned push, pop and alloc.
-- Basic iterators for linear traversing.
 - Linkage of new chunk for more space.
-- **(TODO)** Free list for memory reusage.
+- Free list for memory reusage.
 
 ### Example
 Init a chunk of floats and fill it with multiples of PI

@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 00:35:57 by rgramati          #+#    #+#             //
-//   Updated: 2024/11/05 19:41:23 by rgramati         ###   ########.fr       //
+//   Updated: 2024/11/07 21:27:55 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -14,6 +14,8 @@
 # define CMEM_H
 
 # include <stdint.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 # ifdef CM_INCLUDE_ALL
 #  ifndef CM_CHUNK_IMPLEMENTATION
@@ -34,6 +36,14 @@
 #  include <../src/cm_chunk/cm_chunk.h>
 # endif
 
+# ifdef CM_ARENA_IMPLEMENTATION
+#  include <../src/cm_arena/cm_arena.h>
+# endif
+
+# ifdef CM_HTABLE_IMPLEMENTATION
+#  include <../src/cm_htable/cm_htable.h>
+# endif
+
 # define CM_BIT_COUNT	"\
 \x00\x00\x01\x00\x02\x00\x00\x00\x03\x00\x00\x00\x00\x00\x00\x00\
 \x04\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\
@@ -52,16 +62,22 @@
  *	CM_CLEAR_NULL : reset structure settings.
  *	CM_CLEAR_FREE : frees the structure.
  *					is also CM_CLEAR_ZERO | CM_CLEAR_NULL
- *	CM_CLEAR_WIPE : erase values from the strucutre.
- *					can be ORed with a number of values to
- *					erase multiple values.
  */
 enum	e_clear_flags
 {
 	CM_CLEAR_ZERO = 1 << 8,
 	CM_CLEAR_NULL = 1 << 9,
-	CM_CLEAR_WIPE = 1 << 10,
 	CM_CLEAR_FREE = CM_CLEAR_ZERO | CM_CLEAR_NULL | 1 << 11
+};
+
+/**
+ * @struct	s_flist			Free list linked pointer.
+ *
+ * @struct s_flist *	(next)	Next pointer.
+ */
+struct s_flist
+{
+	struct s_flist	*next;
 };
 
 // ************************************************************************** //
@@ -116,13 +132,11 @@ void
 *cm_chunk_push(t_cm_chunk *chunk_ptr, void *elem, uint32_t elem_size);
 
 /**
- * @brief	Pops an element from a memory chunk.
+ * @brief	Free a pointer from a memory chunk.
  *
  * @param		(chunk)		Chunk pointer.
- * @param		(elem)		Opaque pointer to store the popped data.
- *							Can be NULL if you dont need to save this.
- *
- * @returns	Destination pointer, so elem.
+ * @param		(elem)		Pointer to free, should be a pointer returned 
+ *							by cm_chunk_(alloc/push).
  */
 void
 cm_chunk_pop(t_cm_chunk *chunk_ptr, void *elem);
@@ -214,8 +228,13 @@ void	cm_chunk_link(t_cm_chunk *chunk_ptr);
 
 #ifdef CM_ARENA_IMPLEMENTATION
 
-# include <../src/cm_arena/cm_arena.h>
 typedef void				t_cm_arena;
+
+t_cm_arena
+*cm_arena_init();
+
+void
+cm_arena_clear(t_cm_arena *arena_ptr, uint32_t flags);
 
 #endif
 
@@ -223,7 +242,6 @@ typedef void				t_cm_arena;
 
 #ifdef CM_HTABLE_IMPLEMENTATION
 
-# include <../src/cm_htable/cm_htable.h>
 typedef void				t_cm_htable;
 
 t_cm_htable

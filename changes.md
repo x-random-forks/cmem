@@ -1,5 +1,10 @@
 # libcmem changelog
 
+***v 0.20***
+    - Removed iterators, no longer usable with dynamic free.
+    - Arena implementation starting, still in progress.
+    - minor changes.
+
 ***v 0.13***: 
     - Free list implementation. BROKE ITERATORS MADGE
     - Fixed line padding detection in 24bpp bitmap parsing

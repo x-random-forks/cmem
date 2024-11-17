@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/21 22:31:25 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/21 22:46:37 by rgramati         ###   ########.fr       //
+//   Updated: 2024/11/08 19:00:52 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -14,34 +14,36 @@
 # define CM_ARENA_H
 
 # include <stdint.h>
+# include <sys/mman.h>
 
-# ifdef _SYS_MMAN_H
-#  define CM_ARENA_MMAP		mmap
-#  define CM_ARENA_MPROTECT	mprotect
-#  define CM_ARENA_MUNMAP	munmap
-# else
-#  define CM_ARENA_MMAP		cm_mmap
-#  define CM_ARENA_MPROTECT	cm_mprotect
-#  define CM_ARENA_MUNMAP	cm_munmap
-# endif
+# define CM_ARENA_SIZE_MIN	0x00001000
+# define CM_ARENA_SIZE_MAX	0x20000000
+# define CM_ARENA_DATA_CAP	0x1FFFFFE0
 
-# define CM_ARENA_SIZE		536870912
-# define CM_ARENA_CUT		4096
-# define CM_ARENA_DATA_CAP	536870880
+# define CM_ARENA_CUT_SIZE	0x00001000
 
-# define CM_ARENA_FB_BYTE	0x42
-# define CM_ARENA_AU_BYTE	0x24
+# define CM_ARENA_INIT		1	
+
+# define CM_ARENA_ZERO_BYTE 0xc0
+# define CM_ARENA_FREE_BYTE	0x42
+# define CM_ARENA_STOP_BYTE	0x24
 
 // ************************************************************************** //
 
 struct s_cm_arena
 {
-	uint32_t			capacity;
-	uint32_t			size;
-	uint32_t			alignment;
-	uint32_t			elem_size;
-	char				name[16];
+	uint64_t		size;
+	uint64_t		page;
+	uint64_t		capacity;
+	struct s_flist	*free_list;
 };
+
+typedef struct s_cm_block_header
+{
+	uint32_t	size;
+	uint32_t	usable;
+	void		*dummy2;
+}	t_cm_block;
 
 // ************************************************************************** //
 

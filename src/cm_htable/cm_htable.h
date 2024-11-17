@@ -6,7 +6,7 @@
 //   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/10/06 19:06:48 by rgramati          #+#    #+#             //
-//   Updated: 2024/10/06 20:00:11 by rgramati         ###   ########.fr       //
+//   Updated: 2024/11/07 18:41:41 by rgramati         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -28,10 +28,10 @@ struct s_cm_entry
 
 struct s_cm_htable
 {
-	uint16_t			size;
-	uint16_t			capacity;
 	struct s_cm_entry	*entries;
 	void				(*del)(void *);
+	uint16_t			size;
+	uint16_t			capacity;
 };
 
 // ************************************************************************** //
