@@ -6,7 +6,7 @@
 /*   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:32:49 by rgramati          #+#    #+#             */
-/*   Updated: 2024/09/23 20:28:57 by rgramati         ###   ########.fr       */
+/*   Updated: 2024/11/18 00:13:58 by kiroussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,75 +66,4 @@ char	*cm_strdup(const char *str)
 		cpy[len] = 0;
 	}
 	return (cpy);
-}
-
-void	cm_memset(void *ptr, unsigned char c, uint32_t n)
-{
-	while (n && (uintptr_t)ptr & (sizeof(uint64_t) - 1))
-	{
-		*(uint8_t *)ptr = c;
-		ptr++;
-		n--;
-	}
-	while (n >= sizeof(uint64_t))
-	{
-		*(uint64_t *)ptr = c * (-1UL / 255);
-		ptr += sizeof(uint64_t);
-		n -= sizeof(uint64_t);
-	}
-	while (n)
-	{
-		*(uint8_t *)ptr = c;
-		ptr++;
-		n--;
-	}
-}
-
-void	cm_memcpy(void *dst, void *src, uint32_t n)
-{
-	while (n && (uintptr_t)src & (sizeof(uint64_t) - 1))
-	{
-		*(uint8_t *)dst = *(uint8_t *)src;
-		n--;
-		src++;
-		dst++;
-	}
-	while (n >= sizeof(uint64_t))
-	{
-		*(uint64_t *)dst = *(uint64_t *)src;
-		n -= sizeof(uint64_t);
-		src += sizeof(uint64_t);
-		dst += sizeof(uint64_t);
-	}
-	while (n)
-	{
-		*(uint8_t *)dst = *(uint8_t *)src;
-		n--;
-		src++;
-		dst++;
-	}
-}
-
-void	cm_memmove(void *dst, void *src, uint32_t n)
-{
-	if ((uintptr_t)dst > (uintptr_t)src)
-	{
-		cm_memcpy(dst, src, n);
-		return ;
-	}
-	while (n && (uintptr_t)(src + n - 1) & (sizeof(uint64_t) - 1))
-	{
-		*(uint8_t *)(dst + n - 1) = *(uint8_t *)(src + n - 1);
-		n--;
-	}
-	while (n >= sizeof(uint64_t))
-	{
-		*(uint64_t *)(dst + n - sizeof(uint64_t)) = *(uint64_t *)(src + n - sizeof(uint64_t));
-		n -= sizeof(uint64_t);
-	}
-	while (n)
-	{
-		*(uint8_t *)(dst + n - 1) = *(uint8_t *)(src + n - 1);
-		n--;
-	}
 }

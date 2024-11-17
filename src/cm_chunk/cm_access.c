@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//                                                                            //
-//                                                        :::      ::::::::   //
-//   cm_access.c                                        :+:      :+:    :+:   //
-//                                                    +:+ +:+         +:+     //
-//   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
-//                                                +#+#+#+#+#+   +#+           //
-//   Created: 2024/09/27 01:42:35 by rgramati          #+#    #+#             //
-//   Updated: 2024/11/07 20:55:37 by rgramati         ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cm_access.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/27 01:42:35 by rgramati          #+#    #+#             */
+/*   Updated: 2024/11/18 00:13:05 by kiroussa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef CM_CHUNK_IMPLEMENTATION
 # define CM_CHUNK_IMPLEMENTATION
@@ -44,13 +44,13 @@ uint32_t	cm_chunk_index(t_cm_chunk *chunk_ptr, void *elem)
 		while (offset > sizeof(struct s_cm_chunk))
 		{
 			if (!chunk->next)
-				return ((uint32_t)-1);
+				return ((uint32_t) - 1);
 			chunk = chunk->next;
 			offset = (uintptr_t)elem - (uintptr_t)chunk;
 		}
-		index = (uintptr_t)elem - (uintptr_t)&chunk->data;
+		index = (uintptr_t)elem - (uintptr_t) & chunk->data;
 		if (index & (chunk->alignment - 1))
-			index = ((uint32_t)-1);
+			index = ((uint32_t) - 1);
 		else
 			index >>= CM_BIT_COUNT[chunk->alignment];
 	}

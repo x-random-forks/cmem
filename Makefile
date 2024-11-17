@@ -6,7 +6,7 @@
 #    By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/05 17:09:56 by rgramati          #+#    #+#              #
-#    Updated: 2024/11/07 20:22:50 by rgramati         ###   ########.fr        #
+#    Updated: 2024/11/18 00:12:44 by kiroussa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,8 @@ OBJS_DIR	:=	build
 SRCS		:=	cm_chunk/cm_chunk.c		\
 				cm_chunk/cm_links.c		\
 				cm_chunk/cm_access.c	\
-				cm_arena/cm_arena.c		\
-				cm_htable/cm_htable.c	\
-				cm_limg/cm_limg.c		\
-				utils.c
+				utils.c \
+				utils2.c
 				# cm_arena/cm_arena.c		\
 
 SRCS		:=	$(addprefix $(SRC_DIR)/, $(SRCS))

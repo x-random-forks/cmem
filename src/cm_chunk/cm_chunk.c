@@ -6,7 +6,7 @@
 /*   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:44:58 by rgramati          #+#    #+#             */
-/*   Updated: 2024/09/23 20:23:11 by rgramati         ###   ########.fr       */
+/*   Updated: 2024/11/18 00:13:14 by kiroussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	cm_chunk_pop(t_cm_chunk *chunk_ptr, void *elem)
 	if (chunk && elem)
 	{
 		index = cm_chunk_index(chunk, elem);
-		if (index == (uint32_t)-1)
+		if (index == (uint32_t) - 1)
 			return ;
 		((struct s_flist *)elem)->next = chunk->free_list;
 		chunk->free_list = elem;

@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//                                                                            //
-//                                                        :::      ::::::::   //
-//   cmem.h                                             :+:      :+:    :+:   //
-//                                                    +:+ +:+         +:+     //
-//   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        //
-//                                                +#+#+#+#+#+   +#+           //
-//   Created: 2024/10/06 00:35:57 by rgramati          #+#    #+#             //
-//   Updated: 2024/11/07 21:27:55 by rgramati         ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmem.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgramati <rgramati@student.42angouleme.fr  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/06 00:35:57 by rgramati          #+#    #+#             */
+/*   Updated: 2024/11/18 00:12:01 by kiroussa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef CMEM_H
 # define CMEM_H
@@ -21,27 +21,10 @@
 #  ifndef CM_CHUNK_IMPLEMENTATION
 #   define CM_CHUNK_IMPLEMENTATION
 #  endif
-#  ifndef CM_ARENA_IMPLEMENTATION
-#   define CM_ARENA_IMPLEMENTATION
-#  endif
-#  ifndef CM_HTABLE_IMPLEMENTATION
-#   define CM_HTABLE_IMPLEMENTATION
-#  endif
-#  ifndef CM_LIMG_IMPLEMENTATION
-#   define CM_LIMG_IMPLEMENTATION
-#  endif
 # endif
 
 # ifdef CM_CHUNK_IMPLEMENTATION
 #  include <../src/cm_chunk/cm_chunk.h>
-# endif
-
-# ifdef CM_ARENA_IMPLEMENTATION
-#  include <../src/cm_arena/cm_arena.h>
-# endif
-
-# ifdef CM_HTABLE_IMPLEMENTATION
-#  include <../src/cm_htable/cm_htable.h>
 # endif
 
 # define CM_BIT_COUNT	"\
@@ -213,73 +196,18 @@ void
  *
  * @return	Next chunk pointer, NULL if no linking
  */
-t_cm_chunk	*cm_chunk_next(t_cm_chunk *chunk_ptr);
+t_cm_chunk
+*cm_chunk_next(t_cm_chunk *chunk_ptr);
 
 /**
  * @brief	Allocates new linked chunk for additional space.
  *
  * @param		(chunk)		Chunk pointer.
  */
-void	cm_chunk_link(t_cm_chunk *chunk_ptr);
+void
+cm_chunk_link(t_cm_chunk *chunk_ptr);
 
 # endif	//	CM_CHUNK_IMPLEMENTATION
-
-// ************************************************************************** //
-
-#ifdef CM_ARENA_IMPLEMENTATION
-
-typedef void				t_cm_arena;
-
-t_cm_arena
-*cm_arena_init();
-
-void
-cm_arena_clear(t_cm_arena *arena_ptr, uint32_t flags);
-
-#endif
-
-// ************************************************************************** //
-
-#ifdef CM_HTABLE_IMPLEMENTATION
-
-typedef void				t_cm_htable;
-
-t_cm_htable
-*cm_htable_init(uint32_t capacity);
-
-void
-cm_htable_clear(t_cm_htable *htable_ptr, uint32_t flags);
-
-void
-cm_htable_set(t_cm_htable *htable_ptr, const char *key, void *data);
-
-void
-*cm_htable_get(t_cm_htable *htable_ptr, const char *key);
-
-void
-*cm_htable_remove(t_cm_htable *htable_ptr, const char *key);
-
-#endif
-
-// ************************************************************************** //
-
-#ifdef CM_LIMG_IMPLEMENTATION
-
-# include <../src/cm_limg/cm_limg.h>
-
-typedef enum e_open_types
-{
-	CM_OPEN_LOAD = 1,
-	CM_OPEN_SAVE = 1 << 1,
-	CM_OPEN_ALLOC = 1 << 2
-}	t_open_types;
-
-uint32_t
-cm_bmp(const char *filename, uint32_t **data_ptr, uint64_t flags);
-
-// TODO : #include <zlib.h> and png parsing :)
-
-#endif
 
 // ************************************************************************** //
 
@@ -303,9 +231,6 @@ cm_memset(void *ptr, unsigned char c, uint32_t n);
 
 void
 cm_memcpy(void *dst, void *src, uint32_t n);
-
-void
-cm_memmove(void *dst, void *src, uint32_t n);
 
 /* ************************************************************************** */
 
